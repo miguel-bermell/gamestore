@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CUSTOM CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <title>Tienda de Videojuegos</title>
+</head>
+<body>
+<h1>Tienda Videojuegos</h1>
+<form>
+  <h2>Comprar Videojuego</h2>
+  <span>Nombre</span><input type=text id="name" />
+  <br/>
+  <span>Precio</span><input type=text id="price" />
+  <br/>
+  <select id="category">
+    <option value="1">XBOX 360</option>
+    <option value="2">PS4</option>
+    <option value="3">Switch</option>
+  </select>
+  <select id="genre">
+    <option value="1">Accion</option>
+    <option value="2">Plataformas</option>
+    <option value="3">FPS</option>
+  </select>
+  <input type=button onclick="createGame();" value="Enviar">
+  </form>
+  
+  <table border=1 id="table"></table>
+
+
+
+  <script src="./js/script.js"></script>
+  <script src="./js/classes/Videojuego.js"></script>
+</body>
+</html>

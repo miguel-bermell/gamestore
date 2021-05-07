@@ -1,0 +1,7 @@
+.delete-game,
+.delete-game:hover {
+    float: right;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+}
