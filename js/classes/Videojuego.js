@@ -29,6 +29,9 @@ class Videojuego {
 			case Videojuego.CAT_SWITCH:
 				texto = "Switch";
 				break;
+			case Videojuego.CAT_PC:
+				texto = "PC";
+				break;
 		}
 		return texto;
 	}
@@ -53,14 +56,14 @@ class Videojuego {
   getId() {
     return Date.now()
   }
-	
+
 
 }
 
 Videojuego.CAT_XBOX = 1;
 Videojuego.CAT_PS4 = 2;
 Videojuego.CAT_SWITCH = 3;
-
+Videojuego.CAT_PC = 4;
 
 Videojuego.GEN_ACTION = 1;
 Videojuego.GEN_PLATFORM = 2;

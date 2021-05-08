@@ -35,17 +35,16 @@ function createGame() {
 
 eventListeners()
 function eventListeners() {
-    document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
+      
       if(desStringlify(getVideogame()) != null) {
-        
         let videojuegos = desStringlify(getVideogame());
-        
-        for(let paintgame of videojuegos) {
-          let res = new Videojuego(paintgame)
-          paintGame(res)
-        }
+        convertToObj(videojuegos)
       } 
     })
+    orderByPrice()
+    orderByName()
+
 }
 
 function paintGame(game) {
@@ -87,7 +86,6 @@ function paintGame(game) {
 
 
 function deleteGame(id) {
-  // console.log(id)
   //Encontrar posición
   let gettingObj = desStringlify(getVideogame(id));
   let gamePos = gettingObj.findIndex(game => game.id == id);
@@ -105,9 +103,55 @@ function deleteGame(id) {
 }
 
 function removeItemHtml(pos) {
-  table.removeChild(table.childNodes[pos]);
+  table.removeChild(table.childNodes[pos +1]);
+  console.log(table.childNodes[pos +1])
 }
 
+
+function orderByPrice() {
+  const arrow = document.querySelector('.price');
+  let gettingObj = desStringlify(getVideogame());
+  arrow.onclick = () => {
+    arrow.classList.toggle('red');
+    gettingObj.sort((a,b) => a.price - b.price);
+    clearHTML()
+    console.log(gettingObj)
+    convertToObj(gettingObj)
+  }
+}
+
+
+function orderByName() {
+  const arrow = document.querySelector('.game');
+
+  arrow.onclick = () => {
+    arrow.classList.toggle('red');
+    let gettingObj = desStringlify(getVideogame());
+    gettingObj.sort(
+      function(a,b) {
+        a = a.name.toLowerCase();
+        b = b.name.toLowerCase();
+
+        let res = 0;
+        if(a > b) {
+          res = 1
+        }else if(a < b) {
+          res = -1
+        }
+        return res;
+      }
+    )
+    console.log(gettingObj)
+    clearHTML()
+    convertToObj(gettingObj)
+  }
+}
+
+function clearHTML() {
+  while(table.firstChild) {
+    table.removeChild(table.firstChild)
+  }
+}
 
 function sincStorage(game) {
   localStorage.setItem('Videogame', JSON.stringify(game))
@@ -119,4 +163,11 @@ function getVideogame() {
 
 function desStringlify(data) {
   return JSON.parse(data)
+}
+
+function convertToObj(value) {
+  for(let paintgame of value) {
+    let res = new Videojuego(paintgame)
+    paintGame(res)
+  }
 }
