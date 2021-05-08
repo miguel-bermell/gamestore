@@ -23,9 +23,9 @@ function createGame() {
     }else {
       //Pasar a objeto
       let videoGame = desStringlify(getVideogame());
-      console.log(videoGame)
       //Añadir el videojuego
       videoGame.push(game1)
+      console.log(videoGame)
       //Pasar a JSON y localStorage
       sincStorage(videoGame);
     }
@@ -41,10 +41,10 @@ function eventListeners() {
         let videojuegos = desStringlify(getVideogame());
         convertToObj(videojuegos)
       } 
+      
     })
     orderByPrice()
     orderByName()
-
 }
 
 function paintGame(game) {
@@ -52,28 +52,22 @@ function paintGame(game) {
   if(game != null && game != undefined) {
     const table = document.getElementById('table');
     const tr = document.createElement('tr');
+    tr.id = game.id;
     const td = document.createElement('td');
     const btnDelete = document.createElement('td')
     
     btnDelete.classList.add('delete-game');
     btnDelete.innerText = 'X';
-    let tdName = document.createElement("td");
-    tdName.innerHTML = game.name;	
+    let tdName = createTd(game.name)
     tr.appendChild(tdName);
-    tr.appendChild(btnDelete);
     
-    let tdPrice = document.createElement("td");
-    tdPrice.innerHTML = game.price;	
+    let tdPrice = createTd(game.price)
+
     tr.appendChild(tdPrice);
-    tr.appendChild(btnDelete);
-    
-    let tdAmount = document.createElement("td");
-    tdAmount.innerHTML = game.getCategoryText();
+    let tdAmount = createTd(game.getCategoryText())
     tr.appendChild(tdAmount);
-    tr.appendChild(btnDelete);
     
-    let tdCategory = document.createElement("td");
-    tdCategory.innerHTML = game.getGenreText();	
+    let tdCategory = createTd(game.getGenreText())
     tr.appendChild(tdCategory);
     tr.appendChild(btnDelete);
     table.appendChild(tr);
@@ -81,7 +75,12 @@ function paintGame(game) {
     deleteGame((game.id))
     }
   }
-  
+}
+
+function createTd(text) {
+  const td = document.createElement('td');
+  td.innerText = text;
+  return td;
 }
 
 
@@ -95,7 +94,7 @@ function deleteGame(id) {
     gettingObj.splice(gamePos,1);
     //Stringlifizar
     sincStorage(gettingObj);
-    removeItemHtml(gamePos)
+    removeItemHtml(id)
   } catch (error) {
     console.error(error)
   }
@@ -103,19 +102,22 @@ function deleteGame(id) {
 }
 
 function removeItemHtml(pos) {
-  table.removeChild(table.childNodes[pos +1]);
-  console.log(table.childNodes[pos +1])
+  console.log(table,pos)
+  //table.removeChild(table.childNodes[pos +1]);
+  document.getElementById(pos).remove();
+  
 }
 
 
 function orderByPrice() {
   const arrow = document.querySelector('.price');
-  let gettingObj = desStringlify(getVideogame());
   arrow.onclick = () => {
     arrow.classList.toggle('red');
-    gettingObj.sort((a,b) => a.price - b.price);
-    clearHTML()
+    let gettingObj = desStringlify(getVideogame());
     console.log(gettingObj)
+    gettingObj.sort((a,b) => a.price - b.price);
+    sincStorage(gettingObj)
+    clearHTML()
     convertToObj(gettingObj)
   }
 }
@@ -123,7 +125,6 @@ function orderByPrice() {
 
 function orderByName() {
   const arrow = document.querySelector('.game');
-
   arrow.onclick = () => {
     arrow.classList.toggle('red');
     let gettingObj = desStringlify(getVideogame());
