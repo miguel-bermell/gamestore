@@ -112,10 +112,14 @@ function removeItemHtml(pos) {
 function orderByPrice() {
   const arrow = document.querySelector('.price');
   arrow.onclick = () => {
-    arrow.classList.toggle('red');
+    arrow.classList.toggle('rotate');
     let gettingObj = desStringlify(getVideogame());
     console.log(gettingObj)
-    gettingObj.sort((a,b) => a.price - b.price);
+    if(arrow.classList.contains('rotate')) {
+      gettingObj.sort((a,b) => b.price - a.price);
+    }else {
+      gettingObj.sort((a,b) => a.price - b.price);
+    }
     sincStorage(gettingObj)
     clearHTML()
     convertToObj(gettingObj)
